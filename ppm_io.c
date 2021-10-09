@@ -106,7 +106,6 @@ Image * read_ppm(FILE *fp) {
   return im;
 }
 
-
 /* Write given image to disk as a PPM.
  * Return -1 if any failure occurs, otherwise return the number of pixels written.
  */
