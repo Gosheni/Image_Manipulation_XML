@@ -164,7 +164,11 @@ void free_image(Image **im) {
  * return -1 if error, otherwise 0
  */
 int resize_image(Image **im, int rows, int cols) {
-  // TODO: IMPLEMENT THIS FUNCTION
+  if (im == NULL){
+    return -1;
+  } 
+  im = realloc(im, (im->rows * im->cols) * sizeof(Pixel));
+  
   return 0;
 }
 
