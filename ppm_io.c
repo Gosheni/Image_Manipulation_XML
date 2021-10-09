@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -155,7 +154,8 @@ void output_dims(Image *im) {
  * and set to null 
  */
 void free_image(Image **im) {
-  // TODO: IMPLEMENT THIS FUNCTION
+  free(im);
+  im = NULL;
 }
 
 /* resize_image - utility function to reallocate an image to the specified size;
