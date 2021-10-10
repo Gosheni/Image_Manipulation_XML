@@ -161,11 +161,12 @@ void output_dims(Image *im) {
  * and set to null 
  */
 void free_image(Image **im) {
-  // free image
-  free(im);
-
+  // free image data, then free image itself
+  free((*im)->data);
+  free(*im);
+  
   // set image to NULL
-  im = NULL;
+  *im = NULL;
 }
 
 /* resize_image - utility function to reallocate an image to the specified size;

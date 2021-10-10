@@ -75,8 +75,8 @@ int main(int argc, char **argv) {
   printf("Image created with %d pixels.\n", num_pixels_written);
 
   // clean up!
-  free(im->data);  // releases the pixel array
-  free(im);        // releases the image itself
-
+  //free(im->data);  // releases the pixel array
+  //free(im);        // releases the image itself
+  free_image(&im);
 	return 0;
 }
