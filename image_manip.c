@@ -23,8 +23,9 @@ unsigned char pixel_to_gray (const Pixel *p) {
  */
 Image * binarize(Image * im, int threshold) {
   for (int i = 0; i < (im->rows * im->cols); i++) {
-    unsigned char value = pixel_to_gray(im->data);
-    if (value < threshold) {
+    unsigned char value = pixel_to_gray(&im->data[i]);
+    if ((int) value < threshold) {
+      printf("BLACK!!\n");
       im->data->r = 0;
       im->data->g = 0;
       im->data->b = 0;
@@ -34,9 +35,9 @@ Image * binarize(Image * im, int threshold) {
       im->data->b = 255;
     }
 
-    im->data++;
+    //im->(data++);
   }
-
+  printf("FINISHED\n");
   return im; //REPLACE STUB
 }
 

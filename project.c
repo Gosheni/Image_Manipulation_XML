@@ -40,25 +40,39 @@ int main (int argc, char* argv[]) {
 
   Image * orig_image = read_ppm(orig);
 
+  new_image->rows = orig_image->rows;
+  new_image->cols = orig_image->cols;
+  
   if (orig_image == NULL) {
     fprintf(stderr, "The Input file cannot be read as a PPM file\n");
     return RC_INVALID_PPM;
   }
 
-  if (strcmp(argv[3], "binarize")) {
+  if (strcmp(argv[3], "binarize") == 0) {
     new_image = binarize(orig_image, atoi(argv[4]));
-  }
-  else if (strcmp(argv[3], "crop")) new_image = crop(orig_image, atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), atoi(argv[7]));
-  else if (strcmp(argv[3], "zoom_in")) new_image = zoom_in(orig_image);
-  else if (strcmp(argv[3], "rotate_left")) new_image = rotate_left(orig_image);
-  else if (strcmp(argv[3], "pointilism")) new_image = pointilism(orig_image);
-  else if (strcmp(argv[3], "blur")) new_image = blur(orig_image, atoi(argv[4]));
-  else {
+  } else if (strcmp(argv[3], "crop") == 0) {
+    new_image = crop(orig_image, atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), atoi(argv[7]));
+  } else if (strcmp(argv[3], "zoom_in") == 0) {
+    new_image = zoom_in(orig_image);
+  } else if (strcmp(argv[3], "rotate_left") == 0) {
+    new_image = rotate_left(orig_image);
+  } else if (strcmp(argv[3], "pointilism") == 0) {
+    new_image = pointilism(orig_image);
+  } else if (strcmp(argv[3], "blur") == 0) {
+    new_image = blur(orig_image, atoi(argv[4]));
+  } else {
     fprintf(stderr, "Unsupported image processing operations\n");
     return RC_INVALID_OPERATION;
   }
+
+  FILE * manip = fopen(argv[2], "w");
+
+  if (manip == NULL) {
+    fprintf(stderr, "Output file I/O error\n");
+    return RC_WRITE_FAILED;
+  }
   
-  int num_pixels = write_ppm(argv[2], new_image);
+  int num_pixels = write_ppm(manip, new_image);
   
   if (num_pixels == -1) {
     fprintf(stderr, "Output file I/O error\n");
