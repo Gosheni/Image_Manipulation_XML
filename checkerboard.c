@@ -17,7 +17,7 @@
  *****************************************************************************/
 #include "ppm_io.h" // PPM I/O header
 #include <stdlib.h> // c functions: atio
-
+#include <stdio.h>
 
 int main(int argc, char **argv) {
 	// parsing command line arguments

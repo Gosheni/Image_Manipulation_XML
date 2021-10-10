@@ -109,14 +109,20 @@ Image * read_ppm(FILE *fp) {
  * Return -1 if any failure occurs, otherwise return the number of pixels written.
  */
 int write_ppm(FILE *fp, const Image *im) {
-  // TODO: IMPLEMENT THIS FUNCTION
+  // Check if fp is NULL, if so, return -1
   if (fp == NULL){
     return -1;
   }
+
+  // Write header code for ppm
+  fprintf(fp, "P6\n%d %d\n255\n", im->cols, im->rows);
+
+  // Write the stream of data to fp, return -1 if fails
   if (fwrite(im->data, sizeof(Pixel), (im->rows) * (im->cols), fp) != (size_t)((im->rows) * (im->cols))) {
     return -1;
   }
-  
+
+  // Return # of pixels written
   return im->rows * im->cols; // REPLACE THIS STUB
 }
 
@@ -155,7 +161,10 @@ void output_dims(Image *im) {
  * and set to null 
  */
 void free_image(Image **im) {
+  // free image
   free(im);
+
+  // set image to NULL
   im = NULL;
 }
 
@@ -164,10 +173,13 @@ void free_image(Image **im) {
  * return -1 if error, otherwise 0
  */
 int resize_image(Image **im, int rows, int cols) {
+  // Check if im is NULL, if so, return -1
   if (im == NULL){
     return -1;
-  } 
-  im = realloc(im, (im->rows * im->cols) * sizeof(Pixel));
+  }
+
+  // realloc array at im with im that has new row and col size
+  *im = realloc(*im, (rows * cols) * sizeof(Pixel));
   
   return 0;
 }

@@ -1,5 +1,6 @@
 #ifndef PPM_IO_H
 #define PPM_IO_H
+#include <stdio.h>
 
 /* struct to store a point */
 typedef struct _point {
