@@ -22,31 +22,31 @@ unsigned char pixel_to_gray (const Pixel *p);
 //___binarize___
 /* convert image to black and white only based on threshold value
  */
-
+Image * binarize(Image *, int);
 
 //___crop___
 /* crop the image given two corner pixel locations
  */
-
+Image * crop(Image *, int, int, int, int);
 
 //___zoom_in___
 /* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
  */
-
+Image * zoom_in(Image *);
 
 //___rotate_left___
 /* rotate the image 90 degrees to the left (counter-clockwise)
  */
-
+Image * rotate_left(Image *);
 
 //___pointilism___
 /* apply painting-like pointilism technique to image
  */
-
+Image * pointilism(Image *);
 
 //___blur___
 /* apply a blurring filter to the image
  */
-
+Image * blur(Image *, int);
 
 #endif

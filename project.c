@@ -30,6 +30,43 @@ int main (int argc, char* argv[]) {
   }
 
   // TODO: implement the rest of this project!
+  Image * new_image = malloc(sizeof(Image));
+  FILE * orig = fopen(argv[1], "r");
+
+  if (orig == NULL) {
+    fprintf(stderr, "Input file I/O error\n");
+    return RC_OPEN_FAILED;
+  }
+
+  Image * orig_image = read_ppm(orig);
+
+  if (orig_image == NULL) {
+    fprintf(stderr, "The Input file cannot be read as a PPM file\n");
+    return RC_INVALID_PPM;
+  }
+
+  if (strcmp(argv[3], "binarize")) {
+    new_image = binarize(orig_image, atoi(argv[4]));
+  }
+  else if (strcmp(argv[3], "crop")) new_image = crop(orig_image, atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), atoi(argv[7]));
+  else if (strcmp(argv[3], "zoom_in")) new_image = zoom_in(orig_image);
+  else if (strcmp(argv[3], "rotate_left")) new_image = rotate_left(orig_image);
+  else if (strcmp(argv[3], "pointilism")) new_image = pointilism(orig_image);
+  else if (strcmp(argv[3], "blur")) new_image = blur(orig_image, atoi(argv[4]));
+  else {
+    fprintf(stderr, "Unsupported image processing operations\n");
+    return RC_INVALID_OPERATION;
+  }
+  
+  int num_pixels = write_ppm(argv[2], new_image);
+  
+  if (num_pixels == -1) {
+    fprintf(stderr, "Output file I/O error\n");
+    return RC_WRITE_FAILED;
+  } else if (num_pixels != new_image->cols * new_image->rows) {
+    fprintf(stderr, "Other errors not specified above\n");
+    return RC_UNSPECIFIED_ERR;
+  }
   
   return RC_SUCCESS;
 }

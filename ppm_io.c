@@ -110,9 +110,7 @@ Image * read_ppm(FILE *fp) {
  */
 int write_ppm(FILE *fp, const Image *im) {
   // Check if fp is NULL, if so, return -1
-  if (fp == NULL){
-    return -1;
-  }
+  if (fp == NULL) return -1;
 
   // Write header code for ppm
   fprintf(fp, "P6\n%d %d\n255\n", im->cols, im->rows);
