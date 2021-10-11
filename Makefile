@@ -4,7 +4,7 @@ CC=gcc
 CFLAGS=-std=c99 -pedantic -Wall -Wextra 
 
 # Links together files needed to create executable
-program: project.o ppm_io.o image_manip.o
+project: project.o ppm_io.o image_manip.o
 	$(CC) -o project project.o ppm_io.o image_manip.o
 
 # Compiles mainFile.c to create mainFile.o

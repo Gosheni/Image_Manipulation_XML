@@ -24,20 +24,18 @@ unsigned char pixel_to_gray (const Pixel *p) {
 Image * binarize(Image * im, int threshold) {
   for (int i = 0; i < (im->rows * im->cols); i++) {
     unsigned char value = pixel_to_gray(&im->data[i]);
+    
     if ((int) value < threshold) {
-      printf("BLACK!!\n");
-      im->data->r = 0;
-      im->data->g = 0;
-      im->data->b = 0;
+      im->data[i].r = 0;
+      im->data[i].g = 0;
+      im->data[i].b = 0;
     } else {
-      im->data->r = 255;
-      im->data->g = 255;
-      im->data->b = 255;
+      im->data[i].r = 255;
+      im->data[i].g = 255;
+      im->data[i].b = 255;
     }
-
-    //im->(data++);
   }
-  printf("FINISHED\n");
+
   return im; //REPLACE STUB
 }
 
