@@ -50,31 +50,50 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
-	 return NULL;
+  int rows = bot_row - top_row;
+  int cols = bot_col - top_col;
+
+  Image * cropped = malloc(sizeof(Image));
+
+  resize_image(&cropped, rows, cols);
+  cropped->rows = rows;
+  cropped->cols = cols;
+  cropped->data = malloc(sizeof(Pixel) * rows * cols);
+
+  int r = 0;
+  int top = top_row * top_col;
+  int bottom = bot_row * bot_col;
+  
+  for (int i = 0; i < rows * cols; i++) {
+    cropped->data[i].r = im->data[(i + top) * (i + top_row)].r;
+  }
+  
+  return NULL;
 }
 
 //______blur______ (TODO)
 /* apply a blurring filter to the image
  */
 Image * zoom_in(Image * im) {
+  Image * zoomed = malloc(sizeof(Image));
+
+  resize_image(&zoomed, im->rows * 2, im->cols * 2);
+  zoomed->rows = im->rows * 2;
+  zoomed->cols = im->cols * 2;
+  zoomed->data = malloc(sizeof(Pixel) * (zoomed->rows * 2) * (zoomed->cols * 2));
+  
+  int row = 0;
+  int col = 0;
+  
+  for (int i = 0; i < im->rows * im->cols; i++) {
+    //cropped[data
+  }
   return NULL; //REPLACE STUB
 }
 
 //______zoom_in______ (TODO)
 /* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
  */
-
-//I make a separate funciton for copy_image for convenience and readability
-Image * copy_image(Image * im){
-  Image *copy = malloc(sizeof(Image));
-  copy->data = malloc(sizeof(Pixel) * (im->rows) * (im->cols));
-  for (int i = 0; i < (im->rows) * (im->cols); i++){
-    copy->data[i].r = im->data[i].r;
-    copy->data[i].g = im->data[i].g;
-    copy->data[i].b = im->data[i].b;
-  }
-  return copy;
-}
 
 Image * rotate_left(Image * im) {
   //Make an image with reversed dimensions
@@ -87,8 +106,8 @@ Image * rotate_left(Image * im) {
   int row = im->rows;
   int col = im->cols;
   int index = 0;
-  
   //Loop to reinitialize rgb values of rotated im
+
   for (int i = col-1; i >= 0; i--) {
     for (int j = 0; j < row; j++){
       copy->data[index].r = im->data[i+j*col].r;
