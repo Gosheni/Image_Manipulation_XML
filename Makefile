@@ -35,3 +35,10 @@ checkerboard: checkerboard.o ppm_io.o
 
 checkerboard.o: checkerboard.c ppm_io.h
 	$(CC) $(CFLAGS) -c checkerboard.c -g
+
+# img_cmp
+img_cmp: img_cmp.o ppm_io.o
+	$(CC) -o img_cmp img_cmp.o ppm_io.o
+
+img_cmp.o: img_cmp.c ppm_io.h
+	$(CC) $(CFLAGS) -c img_cmp.c -g

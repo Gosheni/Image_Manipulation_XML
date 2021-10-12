@@ -50,13 +50,44 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
-	 return NULL;
+  int rows = bot_row - top_row;
+  int cols = bot_col - top_col;
+
+  Image * cropped = malloc(sizeof(Image));
+
+  resize_image(&cropped, rows, cols);
+  cropped->rows = rows;
+  cropped->cols = cols;
+  cropped->data = malloc(sizeof(Pixel) * rows * cols);
+
+  int r = 0;
+  int top = top_row * top_col;
+  int bottom = bot_row * bot_col;
+  
+  for (int i = 0; i < rows * cols; i++) {
+    cropped->data[i].r = im->data[(i + top) * (i + top_row)].r;
+  }
+  
+  return NULL;
 }
 
 //______blur______ (TODO)
 /* apply a blurring filter to the image
  */
 Image * zoom_in(Image * im) {
+  Image * zoomed = malloc(sizeof(Image));
+
+  resize_image(&zoomed, im->rows * 2, im->cols * 2);
+  zoomed->rows = im->rows * 2;
+  zoomed->cols = im->cols * 2;
+  zoomed->data = malloc(sizeof(Pixel) * (zoomed->rows * 2) * (zoomed->cols * 2));
+  
+  int row = 0;
+  int col = 0;
+  
+  for (int i = 0; i < im->rows * im->cols; i++) {
+    //cropped[data
+  }
   return NULL; //REPLACE STUB
 }
 
@@ -70,12 +101,15 @@ Image * rotate_left(Image * im) {
   int index = 0;
 
   resize_image(&im, im->cols, im->rows);
-
+  int temp = im->rows;
+  im->rows = im->cols;
+  im->cols = temp;
+  
   for (int i = col-1; i >= 0; i--) {
     for (int j = 0; j < row; j++){
-      im->data[index].r = copy->data[i+j*col].r;
-      im->data[index].g = copy->data[i+j*col].g;
-      im->data[index].b = copy->data[i+j*col].b;
+      im->data[index].r = copy->data[i + j*col].r;
+      im->data[index].g = copy->data[i + j*col].g;
+      im->data[index].b = copy->data[i + j*col].b;
 
       index++;
     }
