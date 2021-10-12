@@ -22,9 +22,13 @@ unsigned char pixel_to_gray (const Pixel *p) {
 /* convert image to black and white only based on threshold value
  */
 Image * binarize(Image * im, int threshold) {
+  // loop through each pixel in the array
   for (int i = 0; i < (im->rows * im->cols); i++) {
+    // get pixel greyscale value
     unsigned char value = pixel_to_gray(&im->data[i]);
-    
+
+    // if value < threshold, r, g, and b = 0
+    // else r, g, and b = 255
     if ((int) value < threshold) {
       im->data[i].r = 0;
       im->data[i].g = 0;
@@ -36,7 +40,8 @@ Image * binarize(Image * im, int threshold) {
     }
   }
 
-  return im; //REPLACE STUB
+  // return image
+  return im; 
 }
 
 //______crop______ (TODO)
@@ -45,7 +50,16 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
-  return NULL; //REPLACE STUB
+  int rows = bot_row - top_row;
+  int cols = bot_col - top_col;
+
+  Image * cropped;
+  
+  resize_image(&im, rows, cols);
+
+  for (int i = 
+  
+  return im; 
 }
 
 //______blur______ (TODO)
