@@ -50,16 +50,7 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
-  int rows = bot_row - top_row;
-  int cols = bot_col - top_col;
-
-  Image * cropped;
-  
-  resize_image(&im, rows, cols);
-
-  for (int i = 
-  
-  return im; 
+	 return NULL;
 }
 
 //______blur______ (TODO)
@@ -73,7 +64,24 @@ Image * zoom_in(Image * im) {
 /* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
  */
 Image * rotate_left(Image * im) {
-  return NULL; //REPLACE STUB
+  Image *copy = im;
+  int row = copy->rows;
+  int col = copy->cols;
+  int index = 0;
+
+  resize_image(&im, im->cols, im->rows);
+
+  for (int i = col-1; i >= 0; i--) {
+    for (int j = 0; j < row; j++){
+      im->data[index].r = copy->data[i+j*col].r;
+      im->data[index].g = copy->data[i+j*col].g;
+      im->data[index].b = copy->data[i+j*col].b;
+
+      index++;
+    }
+  }
+  
+  return im; //REPLACE STUB
 }
 
 // _______rotate-left________ (TODO)
