@@ -64,13 +64,16 @@ Image * zoom_in(Image * im) {
 /* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
  */
 Image * rotate_left(Image * im) {
-  Image *copy = im;
+  //Copy im onto new Image copy
+  Image *copy;
+  *copy = *im;
+  //Store row and col values/Incrementing index
   int row = copy->rows;
   int col = copy->cols;
   int index = 0;
-
+  //Reallocate image to match the rotated dimensions
   resize_image(&im, im->cols, im->rows);
-
+  //Loop to reinitialize rgb values of rotated im
   for (int i = col-1; i >= 0; i--) {
     for (int j = 0; j < row; j++){
       im->data[index].r = copy->data[i+j*col].r;
