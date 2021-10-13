@@ -96,15 +96,25 @@ Image * zoom_in(Image * im) {
   int index = 0;
   
   for (int i = 0; i < im->cols; i += 2) {
-    for (int j = 0; j < im->rows; j += 2) {
-      //zoomed->data[j + i * cols].r = im->data[i].r;
-      //zoomed->data[j + i * cols].g = im->data[].g;
-      //zoomed->data[j + i * cols].b = im->data[].b;
+    zoomed->data[index].r = im->data[i].r;
+    zoomed->data[index].g = im->data[i].g;
+    zoomed->data[index].b = im->data[i].b;
 
-      //zoomed->data[index + 1].r = im->data[j + i * im->cols].r;
-    }
+    zoomed->data[index + 1].r = im->data[i].r;
+    zoomed->data[index + 1].g = im->data[i].g;
+    zoomed->data[index + 1].b = im->data[i].b;
+
+    zoomed->data[index + zoomed->cols].r = im->data[i].r;
+    zoomed->data[index + zoomed->cols].g = im->data[i].g;
+    zoomed->data[index + zoomed->cols].b = im->data[i].b;
+
+    zoomed->data[index + 1 + zoomed->cols].r = im->data[i].r;
+    zoomed->data[index + 1 + zoomed->cols].g = im->data[i].g;
+    zoomed->data[index + 1 + zoomed->cols].b = im->data[i].b;        
+
+    index += 2;
   }
-  return NULL; //REPLACE STUB
+  return zoomed; //REPLACE STUB
 }
 
 // _______rotate-left________ (TODO)
