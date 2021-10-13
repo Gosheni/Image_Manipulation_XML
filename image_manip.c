@@ -95,26 +95,37 @@ Image * zoom_in(Image * im) {
 
   int index = 0;
   
-  for (int i = 0; i < im->cols; i += 2) {
-    zoomed->data[index].r = im->data[i].r;
-    zoomed->data[index].g = im->data[i].g;
-    zoomed->data[index].b = im->data[i].b;
+  for (int i = 0; i < im->rows; i++) {
+    for (int j = 0; j < im->cols; j++) {
+      // edit top-left element in 2x2 square
+      zoomed->data[index].r = im->data[j + i * im->cols].r;
+      zoomed->data[index].g = im->data[j + i * im->cols].g;
+      zoomed->data[index].b = im->data[j + i * im->cols].b;
 
-    zoomed->data[index + 1].r = im->data[i].r;
-    zoomed->data[index + 1].g = im->data[i].g;
-    zoomed->data[index + 1].b = im->data[i].b;
+      // edit top-right element in 2x2 square
+      zoomed->data[index + 1].r = im->data[j + i * im->cols].r;
+      zoomed->data[index + 1].g = im->data[j + i * im->cols].g;
+      zoomed->data[index + 1].b = im->data[j + i * im->cols].b;
 
-    zoomed->data[index + zoomed->cols].r = im->data[i].r;
-    zoomed->data[index + zoomed->cols].g = im->data[i].g;
-    zoomed->data[index + zoomed->cols].b = im->data[i].b;
+      // edit bottom-left element in 2x2 square
+      zoomed->data[index + zoomed->cols].r = im->data[j + i * im->cols].r;
+      zoomed->data[index + zoomed->cols].g = im->data[j + i * im->cols].g;
+      zoomed->data[index + zoomed->cols].b = im->data[j + i * im->cols].b;
 
-    zoomed->data[index + 1 + zoomed->cols].r = im->data[i].r;
-    zoomed->data[index + 1 + zoomed->cols].g = im->data[i].g;
-    zoomed->data[index + 1 + zoomed->cols].b = im->data[i].b;        
+      // edit bottom-right element in 2x2 square
+      zoomed->data[index + 1 + zoomed->cols].r = im->data[j + i * im->cols].r;
+      zoomed->data[index + 1 + zoomed->cols].g = im->data[j + i * im->cols].g;
+      zoomed->data[index + 1 + zoomed->cols].b = im->data[j + i * im->cols].b;     
 
-    index += 2;
+      // go to next 2x2 square
+      index += 2;
+    }
+
+    // go to next row of 2x2 squares
+    index += zoomed->cols;
   }
-  return zoomed; //REPLACE STUB
+  
+  return zoomed;
 }
 
 // _______rotate-left________ (TODO)
