@@ -163,13 +163,18 @@ Image * rotate_left(Image * im) {
 /* apply a painting like effect i.e. pointilism technique.
  */
 Image * pointilism(Image * im) {
+  //Random integer from 1 to 5
   int radius = (rand() % 5)+1;
+  //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < im->rows * im->cols * 0.03; i++){
+    //Pick random pixel
     int pix = rand() % (im->rows * im->cols);
     int col = pix % im->cols;
     int row = pix / im->cols;
+    //Loop the pixels around the selected pixel within radius
     for (int j = row-radius; j < row+radius; j++){
       for (int k = col-radius; k < col+radius; k++){
+	//Check for edge cases
 	if (j < 0){
 	  j = 0;
 	}
@@ -179,6 +184,7 @@ Image * pointilism(Image * im) {
 	else if (j >= im->rows || k >= im->cols){
 	  continue;
 	}
+	//Color the pixel if it is within radius from the selected pixel
 	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) < (radius * radius)){
 	  im->data[j*im->cols+k].r = im->data[pix].r;
 	  im->data[j*im->cols+k].g = im->data[pix].g;
