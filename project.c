@@ -64,7 +64,7 @@ int main (int argc, char* argv[]) {
     fprintf(stderr, "Unsupported image processing operations\n");
     return RC_INVALID_OPERATION;
   }
-  printf("Check new_image here!!!\n");
+
   FILE * manip = fopen(argv[2], "w");
 
   if (manip == NULL) {

@@ -82,6 +82,9 @@ Image * blur(Image * im, int sigma) {
   return NULL; //REPLACE STUB
 }
 
+//______zoom_in______ (TODO)
+/* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
+ */
 Image * zoom_in(Image * im) {
   Image * zoomed = malloc(sizeof(Image));
 
@@ -89,20 +92,24 @@ Image * zoom_in(Image * im) {
   zoomed->rows = im->rows * 2;
   zoomed->cols = im->cols * 2;
   zoomed->data = malloc(sizeof(Pixel) * (zoomed->rows * 2) * (zoomed->cols * 2));
+
+  int index = 0;
   
-  int row = 0;
-  int col = 0;
-  
-  for (int i = 0; i < im->rows * im->cols; i++) {
-    //cropped[data
+  for (int i = 0; i < im->cols; i += 2) {
+    for (int j = 0; j < im->rows; j += 2) {
+      //zoomed->data[j + i * cols].r = im->data[i].r;
+      //zoomed->data[j + i * cols].g = im->data[].g;
+      //zoomed->data[j + i * cols].b = im->data[].b;
+
+      //zoomed->data[index + 1].r = im->data[j + i * im->cols].r;
+    }
   }
   return NULL; //REPLACE STUB
 }
 
-//______zoom_in______ (TODO)
-/* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
+// _______rotate-left________ (TODO)
+/* rotate the input image counter-clockwise 90 degrees
  */
-
 Image * rotate_left(Image * im) {
   //Make an image with reversed dimensions
   Image *copy = malloc(sizeof(Image));
@@ -114,18 +121,14 @@ Image * rotate_left(Image * im) {
   int row = im->rows;
   int col = im->cols;
   int index = 0;
-<<<<<<< HEAD
+
   //Reallocate image to match the rotated dimensions
   resize_image(&im, im->cols, im->rows);
   int temp = im->rows;
   im->rows = im->cols;
   im->cols = temp;
-  
-  //Loop to reinitialize rgb values of rotated im
-=======
-  //Loop to reinitialize rgb values of rotated im
 
->>>>>>> 2568e42a7eec727ef13e99841384166da069b38f
+  //Loop to reinitialize rgb values of rotated im
   for (int i = col-1; i >= 0; i--) {
     for (int j = 0; j < row; j++){
       copy->data[index].r = im->data[i+j*col].r;
@@ -136,16 +139,9 @@ Image * rotate_left(Image * im) {
     }
   }
   free_image(&im);
-  
+
   return copy; //REPLACE STUB
 }
-
-// _______rotate-left________ (TODO)
-/* rotate the input image counter-clockwise 90 degrees
- */
-
-
-
 
 // _______pointilism________ (TODO)
 /* apply a painting like effect i.e. pointilism technique.
