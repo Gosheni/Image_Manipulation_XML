@@ -60,20 +60,28 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
   cropped->cols = cols;
   cropped->data = malloc(sizeof(Pixel) * rows * cols);
 
-  int r = 0;
-  int top = top_row * top_col;
-  int bottom = bot_row * bot_col;
+  int index = 0;
   
-  for (int i = 0; i < rows * cols; i++) {
-    cropped->data[i].r = im->data[(i + top) * (i + top_row)].r;
+  for (int i = top_row; i < bot_row; i++) {
+    for (int j = top_col; j < bot_col; j++) {
+      cropped->data[index].r = im->data[j + i * cols].r;
+      cropped->data[index].g = im->data[j + i * cols].g;
+      cropped->data[index].b = im->data[j + i * cols].b;
+
+      index++;
+    }
   }
   
-  return NULL;
+  return cropped;
 }
 
 //______blur______ (TODO)
 /* apply a blurring filter to the image
  */
+Image * blur(Image * im, int sigma) {
+  return NULL; //REPLACE STUB
+}
+
 Image * zoom_in(Image * im) {
   Image * zoomed = malloc(sizeof(Image));
 
@@ -104,14 +112,11 @@ Image * rotate_left(Image * im) {
   int index = 0;
   //Reallocate image to match the rotated dimensions
   resize_image(&im, im->cols, im->rows);
-<<<<<<< HEAD
   int temp = im->rows;
   im->rows = im->cols;
   im->cols = temp;
   
-=======
   //Loop to reinitialize rgb values of rotated im
->>>>>>> 55f1b317de209dbe7de0667861bbd466b93e43ea
   for (int i = col-1; i >= 0; i--) {
     for (int j = 0; j < row; j++){
       im->data[index].r = copy->data[i + j*col].r;
@@ -128,13 +133,14 @@ Image * rotate_left(Image * im) {
 // _______rotate-left________ (TODO)
 /* rotate the input image counter-clockwise 90 degrees
  */
-Image * pointilism(Image * im) {
-  return NULL; //REPLACE STUB
-}
+
+
+
 
 // _______pointilism________ (TODO)
 /* apply a painting like effect i.e. pointilism technique.
  */
-Image * blur(Image * im, int sigma) {
+Image * pointilism(Image * im) {
   return NULL; //REPLACE STUB
 }
+
