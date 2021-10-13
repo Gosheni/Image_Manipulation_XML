@@ -132,7 +132,7 @@ Image * zoom_in(Image * im) {
 /* rotate the input image counter-clockwise 90 degrees
  */
 Image * rotate_left(Image * im) {
-  //Make an image with reversed dimensions
+  //Make another image with reversed dimensions as im
   Image *copy = malloc(sizeof(Image));
   copy->data = malloc(sizeof(Pixel) * (im->rows) * (im->cols));
   copy->rows = im->cols;
@@ -142,14 +142,8 @@ Image * rotate_left(Image * im) {
   int row = im->rows;
   int col = im->cols;
   int index = 0;
-
-  //Reallocate image to match the rotated dimensions
-  resize_image(&im, im->cols, im->rows);
-  int temp = im->rows;
-  im->rows = im->cols;
-  im->cols = temp;
-
-  //Loop to reinitialize rgb values of rotated im
+  
+  //Loop to assign rgb values of rotated im into new Image copy
   for (int i = col-1; i >= 0; i--) {
     for (int j = 0; j < row; j++){
       copy->data[index].r = im->data[i+j*col].r;
@@ -159,9 +153,10 @@ Image * rotate_left(Image * im) {
       index++;
     }
   }
+  //Free image im
   free_image(&im);
-
-  return copy; //REPLACE STUB
+  //return new image copy
+  return copy;
 }
 
 // _______pointilism________ (TODO)
