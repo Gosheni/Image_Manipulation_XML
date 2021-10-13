@@ -102,14 +102,19 @@ Image * zoom_in(Image * im) {
 //______zoom_in______ (TODO)
 /* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
  */
+
 Image * rotate_left(Image * im) {
-  //Copy im onto new Image copy
-  Image *copy;
-  *copy = *im;
+  //Make an image with reversed dimensions
+  Image *copy = malloc(sizeof(Image));
+  copy->data = malloc(sizeof(Pixel) * (im->rows) * (im->cols));
+  copy->rows = im->cols;
+  copy->cols = im->rows;
+
   //Store row and col values/Incrementing index
-  int row = copy->rows;
-  int col = copy->cols;
+  int row = im->rows;
+  int col = im->cols;
   int index = 0;
+<<<<<<< HEAD
   //Reallocate image to match the rotated dimensions
   resize_image(&im, im->cols, im->rows);
   int temp = im->rows;
@@ -117,17 +122,22 @@ Image * rotate_left(Image * im) {
   im->cols = temp;
   
   //Loop to reinitialize rgb values of rotated im
+=======
+  //Loop to reinitialize rgb values of rotated im
+
+>>>>>>> 2568e42a7eec727ef13e99841384166da069b38f
   for (int i = col-1; i >= 0; i--) {
     for (int j = 0; j < row; j++){
-      im->data[index].r = copy->data[i + j*col].r;
-      im->data[index].g = copy->data[i + j*col].g;
-      im->data[index].b = copy->data[i + j*col].b;
+      copy->data[index].r = im->data[i+j*col].r;
+      copy->data[index].g = im->data[i+j*col].g;
+      copy->data[index].b = im->data[i+j*col].b;
 
       index++;
     }
   }
+  free_image(&im);
   
-  return im; //REPLACE STUB
+  return copy; //REPLACE STUB
 }
 
 // _______rotate-left________ (TODO)
