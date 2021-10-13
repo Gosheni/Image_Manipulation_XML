@@ -163,6 +163,31 @@ Image * rotate_left(Image * im) {
 /* apply a painting like effect i.e. pointilism technique.
  */
 Image * pointilism(Image * im) {
-  return NULL; //REPLACE STUB
+  int radius = (rand() % 5)+1;
+  for (int i = 0; i < im->rows * im->cols * 0.03; i++){
+    int pix = rand() % (im->rows * im->cols);
+    int col = pix % im->cols;
+    int row = pix / im->cols;
+    for (int j = row-radius; j < row+radius; j++){
+      for (int k = col-radius; k < col+radius; k++){
+	if (j < 0){
+	  j = 0;
+	}
+	else if (k < 0){
+	  k = 0;
+	}
+	else if (j >= im->rows || k >= im->cols){
+	  continue;
+	}
+	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) < (radius * radius)){
+	  im->data[j*col+k].r = im->data[pix].r;
+	  im->data[j*col+k].g = im->data[pix].g;
+	  im->data[j*col+k].b = im->data[pix].b;
+	}
+      }
+    }
+  }
+
+  return im; //REPLACE STUB
 }
 
