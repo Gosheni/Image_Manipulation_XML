@@ -180,9 +180,9 @@ Image * pointilism(Image * im) {
 	  continue;
 	}
 	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) < (radius * radius)){
-	  im->data[j*col+k].r = im->data[pix].r;
-	  im->data[j*col+k].g = im->data[pix].g;
-	  im->data[j*col+k].b = im->data[pix].b;
+	  im->data[j*im->cols+k].r = im->data[pix].r;
+	  im->data[j*im->cols+k].g = im->data[pix].g;
+	  im->data[j*im->cols+k].b = im->data[pix].b;
 	}
       }
     }
