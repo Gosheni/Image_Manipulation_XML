@@ -5,7 +5,7 @@ CFLAGS=-std=c99 -pedantic -Wall -Wextra
 
 # Links together files needed to create executable
 project: project.o ppm_io.o image_manip.o
-	$(CC) -o project project.o ppm_io.o image_manip.o
+	$(CC) -o project project.o ppm_io.o image_manip.o -lm
 
 # Compiles mainFile.c to create mainFile.o
 # Note that we list functions.h here as a file that

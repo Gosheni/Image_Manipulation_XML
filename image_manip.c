@@ -17,6 +17,8 @@ unsigned char pixel_to_gray (const Pixel *p) {
                           (0.11 * (double)p->b) );
 }
 
+double** make_gauss(int N, int sigma);
+
 //______binarize______ (TODO)
 /* convert image to black and white only based on threshold value
  */
@@ -49,16 +51,14 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
-<<<<<<< HEAD
-  int rows = bot_row - top_row + 1;
-  int cols = bot_col - top_col + 1;
+  //int rows = bot_row - top_row + 1;
+  //int cols = bot_col - top_col + 1;
 
-=======
   //Calculate size of the crop
   int rows = bot_row - top_row;
   int cols = bot_col - top_col;
+  
   //Create new image cropped with adjusted size
->>>>>>> 32a791eee1c59612ed45e97a3d74cb42a2646196
   Image * cropped = malloc(sizeof(Image));
 
   cropped->data = malloc(sizeof(Pixel) * rows * cols);
@@ -66,32 +66,23 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
   cropped->cols = cols;
 
   int index = 0;
-<<<<<<< HEAD
   
-  for (int i = top_row; i <= bot_row; i++) {
-    for (int j = top_col; j <= bot_col; j++) {
-      cropped->data[index].r = im->data[j + i * cols].r;
-      cropped->data[index].g = im->data[j + i * cols].g;
-      cropped->data[index].b = im->data[j + i * cols].b;
-=======
   //Loop through original image and assign rgb values of im on to new image cropped
   for (int i = top_row; i < bot_row; i++) {
     for (int j = top_col; j < bot_col; j++) {
       cropped->data[index].r = im->data[j + i * im->cols].r;
       cropped->data[index].g = im->data[j + i * im->cols].g;
       cropped->data[index].b = im->data[j + i * im->cols].b;
->>>>>>> 32a791eee1c59612ed45e97a3d74cb42a2646196
 
       index++;
     }
   }
-<<<<<<< HEAD
+
   printf("final index = %d. It is supposed to be %d\n", index, rows * cols);
-=======
+
   //Free original image im
   free_image(&im);
   
->>>>>>> 32a791eee1c59612ed45e97a3d74cb42a2646196
   return cropped;
 }
 
@@ -104,14 +95,9 @@ Image * blur(Image * im, int sigma) {
   if (10 * sigma % 2 == 0) len = 10 * sigma + 1;
   else len = 10 * sigma;
 
-  float * gauss = malloc(sizeof(float) * len * len);
-
-  int center = len / 2 + 1;
+  double * gauss = malloc(sizeof(double) * len * len);
   
-  for (int i = 0; i < len; i++) {
-    for (int j = 0; j < len; j++) {
-    }
-  }
+  make_gauss(&gauss, 5, 0.5);
   
   return NULL; //REPLACE STUB
 }
@@ -231,3 +217,19 @@ Image * pointilism(Image * im) {
   return im; //REPLACE STUB
 }
 
+void make_gauss(double ** gauss; int N, int sigma) {
+  int center = N / 2 + 1;
+
+  int dx; int dy;
+  
+  for (int i = 0; i < N; i++) {
+    dy = abs(center - i);
+    for (int j = 0; j < N; j++) {
+      dx = abs(center - j);
+
+      *gauss[j + i * N] = (1.0 / (2.0 * PI * sq(sigma))) * exp( -(sq(dx) + sq(dy)) / (2 * sq(sigma)));
+      printf("%f  ", *gauss[i][j]);
+    }
+    printf("\n");
+  }
+}
