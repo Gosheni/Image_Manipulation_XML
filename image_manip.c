@@ -17,7 +17,6 @@ unsigned char pixel_to_gray (const Pixel *p) {
                           (0.11 * (double)p->b) );
 }
 
-
 //______binarize______ (TODO)
 /* convert image to black and white only based on threshold value
  */
@@ -50,27 +49,29 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
+  //Calculate size of the crop
   int rows = bot_row - top_row;
   int cols = bot_col - top_col;
-
+  //Create new image cropped with adjusted size
   Image * cropped = malloc(sizeof(Image));
 
-  resize_image(&cropped, rows, cols);
+  cropped->data = malloc(sizeof(Pixel) * rows * cols);
   cropped->rows = rows;
   cropped->cols = cols;
-  cropped->data = malloc(sizeof(Pixel) * rows * cols);
 
   int index = 0;
-  
+  //Loop through original image and assign rgb values of im on to new image cropped
   for (int i = top_row; i < bot_row; i++) {
     for (int j = top_col; j < bot_col; j++) {
-      cropped->data[index].r = im->data[j + i * cols].r;
-      cropped->data[index].g = im->data[j + i * cols].g;
-      cropped->data[index].b = im->data[j + i * cols].b;
+      cropped->data[index].r = im->data[j + i * im->cols].r;
+      cropped->data[index].g = im->data[j + i * im->cols].g;
+      cropped->data[index].b = im->data[j + i * im->cols].b;
 
       index++;
     }
   }
+  //Free original image im
+  free_image(&im);
   
   return cropped;
 }
