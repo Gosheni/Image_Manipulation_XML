@@ -17,7 +17,6 @@ unsigned char pixel_to_gray (const Pixel *p) {
                           (0.11 * (double)p->b) );
 }
 
-
 //______binarize______ (TODO)
 /* convert image to black and white only based on threshold value
  */
@@ -50,28 +49,49 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
+<<<<<<< HEAD
   int rows = bot_row - top_row + 1;
   int cols = bot_col - top_col + 1;
 
+=======
+  //Calculate size of the crop
+  int rows = bot_row - top_row;
+  int cols = bot_col - top_col;
+  //Create new image cropped with adjusted size
+>>>>>>> 32a791eee1c59612ed45e97a3d74cb42a2646196
   Image * cropped = malloc(sizeof(Image));
 
-  resize_image(&cropped, rows, cols);
+  cropped->data = malloc(sizeof(Pixel) * rows * cols);
   cropped->rows = rows;
   cropped->cols = cols;
-  cropped->data = malloc(sizeof(Pixel) * rows * cols);
 
   int index = 0;
+<<<<<<< HEAD
   
   for (int i = top_row; i <= bot_row; i++) {
     for (int j = top_col; j <= bot_col; j++) {
       cropped->data[index].r = im->data[j + i * cols].r;
       cropped->data[index].g = im->data[j + i * cols].g;
       cropped->data[index].b = im->data[j + i * cols].b;
+=======
+  //Loop through original image and assign rgb values of im on to new image cropped
+  for (int i = top_row; i < bot_row; i++) {
+    for (int j = top_col; j < bot_col; j++) {
+      cropped->data[index].r = im->data[j + i * im->cols].r;
+      cropped->data[index].g = im->data[j + i * im->cols].g;
+      cropped->data[index].b = im->data[j + i * im->cols].b;
+>>>>>>> 32a791eee1c59612ed45e97a3d74cb42a2646196
 
       index++;
     }
   }
+<<<<<<< HEAD
   printf("final index = %d. It is supposed to be %d\n", index, rows * cols);
+=======
+  //Free original image im
+  free_image(&im);
+  
+>>>>>>> 32a791eee1c59612ed45e97a3d74cb42a2646196
   return cropped;
 }
 
@@ -177,13 +197,18 @@ Image * rotate_left(Image * im) {
 /* apply a painting like effect i.e. pointilism technique.
  */
 Image * pointilism(Image * im) {
+  //Random integer from 1 to 5
   int radius = (rand() % 5)+1;
+  //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < im->rows * im->cols * 0.03; i++){
+    //Pick random pixel
     int pix = rand() % (im->rows * im->cols);
     int col = pix % im->cols;
     int row = pix / im->cols;
+    //Loop the pixels around the selected pixel within radius
     for (int j = row-radius; j < row+radius; j++){
       for (int k = col-radius; k < col+radius; k++){
+	//Check for edge cases
 	if (j < 0){
 	  j = 0;
 	}
@@ -193,10 +218,11 @@ Image * pointilism(Image * im) {
 	else if (j >= im->rows || k >= im->cols){
 	  continue;
 	}
+	//Color the pixel if it is within radius from the selected pixel
 	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) < (radius * radius)){
-	  im->data[j*col+k].r = im->data[pix].r;
-	  im->data[j*col+k].g = im->data[pix].g;
-	  im->data[j*col+k].b = im->data[pix].b;
+	  im->data[j*im->cols+k].r = im->data[pix].r;
+	  im->data[j*im->cols+k].g = im->data[pix].g;
+	  im->data[j*im->cols+k].b = im->data[pix].b;
 	}
       }
     }
