@@ -50,8 +50,8 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
-  int rows = bot_row - top_row;
-  int cols = bot_col - top_col;
+  int rows = bot_row - top_row + 1;
+  int cols = bot_col - top_col + 1;
 
   Image * cropped = malloc(sizeof(Image));
 
@@ -62,8 +62,8 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
 
   int index = 0;
   
-  for (int i = top_row; i < bot_row; i++) {
-    for (int j = top_col; j < bot_col; j++) {
+  for (int i = top_row; i <= bot_row; i++) {
+    for (int j = top_col; j <= bot_col; j++) {
       cropped->data[index].r = im->data[j + i * cols].r;
       cropped->data[index].g = im->data[j + i * cols].g;
       cropped->data[index].b = im->data[j + i * cols].b;
@@ -71,7 +71,7 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
       index++;
     }
   }
-  
+  printf("final index = %d. It is supposed to be %d\n", index, rows * cols);
   return cropped;
 }
 
@@ -79,6 +79,20 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
 /* apply a blurring filter to the image
  */
 Image * blur(Image * im, int sigma) {
+  int len;
+  
+  if (10 * sigma % 2 == 0) len = 10 * sigma + 1;
+  else len = 10 * sigma;
+
+  float * gauss = malloc(sizeof(float) * len * len);
+
+  int center = len / 2 + 1;
+  
+  for (int i = 0; i < len; i++) {
+    for (int j = 0; j < len; j++) {
+    }
+  }
+  
   return NULL; //REPLACE STUB
 }
 
