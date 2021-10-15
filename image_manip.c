@@ -17,7 +17,8 @@ unsigned char pixel_to_gray (const Pixel *p) {
                           (0.11 * (double)p->b) );
 }
 
-double** make_gauss(int N, int sigma);
+void make_gauss(double * gauss, int N, double sigma);
+void filter_pixel(Image * im, Pixel * p, int row, int col, double * gauss, int N);
 
 //______binarize______ (TODO)
 /* convert image to black and white only based on threshold value
@@ -97,8 +98,15 @@ Image * blur(Image * im, int sigma) {
 
   double * gauss = malloc(sizeof(double) * len * len);
   
-  make_gauss(&gauss, 5, 0.5);
+  make_gauss(gauss, 11, 1.0);
   
+  for (int i = 0; i < im->rows; i++) {
+    for (int j = 0; j < im->cols; j++) {
+      filter_pixel(im, im->data[j + i * im->cols], i, j, gauss, len);
+    }
+  }
+
+  free(gauss);
   return NULL; //REPLACE STUB
 }
 
@@ -217,19 +225,53 @@ Image * pointilism(Image * im) {
   return im; //REPLACE STUB
 }
 
-void make_gauss(double ** gauss; int N, int sigma) {
+void make_gauss(double * gauss, int N, double sigma) {
   int center = N / 2 + 1;
 
   int dx; int dy;
   
-  for (int i = 0; i < N; i++) {
+  for (int i = 1; i < N + 1; i++) {
     dy = abs(center - i);
-    for (int j = 0; j < N; j++) {
+    for (int j = 1; j < N + 1; j++) {
       dx = abs(center - j);
 
-      *gauss[j + i * N] = (1.0 / (2.0 * PI * sq(sigma))) * exp( -(sq(dx) + sq(dy)) / (2 * sq(sigma)));
-      printf("%f  ", *gauss[i][j]);
+      gauss[j + i * N] = (1.0 / (2.0 * PI * sq(sigma))) * exp( -(sq(dx) + sq(dy)) / (2 * sq(sigma)));
+      printf("%f  ", gauss[j + i * N]);
     }
     printf("\n");
   }
+}
+
+void filter_pixel(Image * im, Pixel * p, int row, int col, double * gauss, int N) {
+  double weights[N * N][3];
+  double weight_sum[3];
+  
+  // find filtered sum
+  int filtered_sum = 0;
+  for (int i = 0; i < N * N; i++) filtered_sum += gauss[i];
+
+  int a = 0; int b = 0;
+  
+  for (int i = row - (N/2); i <= row + (N/2); i++){
+    for (int j = col - (N/2); j <= col + (N/2); j++){
+      if (i < 0 || j < 0 || i > im->rows || j > im->cols) continue;
+
+      weights[b + a * N][0] = im->data[j + i * im->cols].r * gauss[b + a * N];
+      weights[b + a * N][1] = im->data[j + i * im->cols].g * gauss[b + a * N];
+      weights[b + a * N][2] = im->data[j + i * im->cols].b * gauss[b + a * N];
+
+      weights[0]+= weights[b + a * N][0];
+      weights[1]+= weights[b + a * N][1];
+      weights[2]+= weights[b + a * N][2];            
+      
+      b++;
+    }
+    a++;
+  }
+
+  for (int i = 0; i < 3; i++) weight_sum[i] /= filtered_sum;
+
+  im->data[col + row * im->cols].r = weight_sum[0];
+  im->data[col + row * im->cols].g = weight_sum[1];
+  im->data[col + row * im->cols].b = weight_sum[2];    
 }
