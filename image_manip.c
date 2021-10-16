@@ -240,32 +240,36 @@ void make_gauss(double * gauss, int N, double sigma) {
 }
 
 void filter_pixel(Image * im, int row, int col, double * gauss, int N) {
-  double weights[3] = {0.0, 0.0, 0.0};
-  
-  // find filtered sum
+  double weights[3] = {0};
   double filtered_sum = 0;
-  for (int i = 0; i < N * N; i++) filtered_sum += gauss[i];
-
   int a = 0;
-  
+
+  //Loop the filtered matrix elements onto image pixels
   for (int i = row - (N/2); i <= row + (N/2); i++){
     for (int j = col - (N/2); j <= col + (N/2); j++){
+      //Check for edge cases
       if (i < 0 || j < 0 || i > im->rows || j > im->cols) {
 	a++;
 	continue;
       }
+
+      //Multiply gauss filter with pixel and store the value into weights array
+      //Also add the gauss value onto filtered_sum
       weights[0] += (im->data[j + i * im->cols].r * gauss[a]);
       weights[1] += (im->data[j + i * im->cols].g * gauss[a]);
       weights[2] += (im->data[j + i * im->cols].b * gauss[a]);
+      filtered_sum += gauss[a];
 
       a++;
     }
   }
 
+  //Divide each pixel sum by filtered_sum to find normalized value
   weights[0] /= filtered_sum;
   weights[1] /= filtered_sum;
   weights[2] /= filtered_sum;
 
+  //Modify image pixels
   im->data[col + row * im->cols].r = weights[0];
   im->data[col + row * im->cols].g = weights[1];
   im->data[col + row * im->cols].b = weights[2];    
