@@ -81,6 +81,9 @@ int main (int argc, char* argv[]) {
     fprintf(stderr, "Other errors not specified above\n");
     return RC_UNSPECIFIED_ERR;
   }
+
+  free_image(&new_image);
+  free_image(&orig_image);  
   
   return RC_SUCCESS;
 }

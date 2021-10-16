@@ -151,6 +151,8 @@ Image * zoom_in(Image * im) {
     // go to next row of 2x2 squares
     index += zoomed->cols;
   }
+
+  free_image(&im);
   
   return zoomed;
 }
