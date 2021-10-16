@@ -79,8 +79,6 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
     }
   }
 
-  printf("final index = %d. It is supposed to be %d\n", index, rows * cols);
-
   //Free original image im
   free_image(&im);
   
@@ -231,9 +229,9 @@ void make_gauss(double * gauss, int N, double sigma) {
 
   int dx; int dy;
   
-  for (int i = 1; i < N + 1; i++) {
+  for (int i = 0; i < N; i++) {
     dy = abs(center - i);
-    for (int j = 1; j < N + 1; j++) {
+    for (int j = 0; j < N; j++) {
       dx = abs(center - j);
 
       gauss[j + i * N] = (1.0 / (2.0 * PI * sq(sigma))) * exp( -(sq(dx) + sq(dy)) / (2 * sq(sigma)));
@@ -246,29 +244,30 @@ void filter_pixel(Image * im, Pixel p, int row, int col, double * gauss, int N) 
   double weight_sum[3];
   
   // find filtered sum
-  int filtered_sum = 0;
+  double filtered_sum = 0;
   for (int i = 0; i < N * N; i++) filtered_sum += gauss[i];
 
-  int a = 0; int b = 0;
+  int a = 0;
   
   for (int i = row - (N/2); i <= row + (N/2); i++){
     for (int j = col - (N/2); j <= col + (N/2); j++){
       if (i < 0 || j < 0 || i > im->rows || j > im->cols) {
-	b++;
+	a++;
 	continue;
       }
+      //printf("a = %d ", a);
+      //printf("i = %d ", i);
+      //printf("j = %d ", j);
+      weights[a][0] = im->data[j + i * im->cols].r * gauss[a];
+      weights[a][1] = im->data[j + i * im->cols].g * gauss[a];
+      weights[a][2] = im->data[j + i * im->cols].b * gauss[a];
 
-      weights[b + a * N][0] = im->data[j + i * im->cols].r * gauss[b + a * N];
-      weights[b + a * N][1] = im->data[j + i * im->cols].g * gauss[b + a * N];
-      weights[b + a * N][2] = im->data[j + i * im->cols].b * gauss[b + a * N];
-
-      weight_sum[0]+= weights[b + a * N][0];
-      weight_sum[1]+= weights[b + a * N][1];
-      weight_sum[2]+= weights[b + a * N][2];            
+      weight_sum[0]+= weights[a][0];
+      weight_sum[1]+= weights[a][1];
+      weight_sum[2]+= weights[a][2];            
       
-      b++;
+      a++;
     }
-    a++;
   }
 
   for (int i = 0; i < 3; i++) weight_sum[i] /= filtered_sum;
