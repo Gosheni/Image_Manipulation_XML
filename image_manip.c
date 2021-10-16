@@ -18,7 +18,7 @@ unsigned char pixel_to_gray (const Pixel *p) {
 }
 
 void make_gauss(double * gauss, int N, double sigma);
-void filter_pixel(Image * im, Pixel * p, int row, int col, double * gauss, int N);
+void filter_pixel(Image * im, Pixel p, int row, int col, double * gauss, int N);
 
 //______binarize______ (TODO)
 /* convert image to black and white only based on threshold value
@@ -98,7 +98,7 @@ Image * blur(Image * im, int sigma) {
 
   double * gauss = malloc(sizeof(double) * len * len);
   
-  make_gauss(gauss, 11, 1.0);
+  make_gauss(gauss, len, sigma);
   
   for (int i = 0; i < im->rows; i++) {
     for (int j = 0; j < im->cols; j++) {
@@ -107,7 +107,8 @@ Image * blur(Image * im, int sigma) {
   }
 
   free(gauss);
-  return NULL; //REPLACE STUB
+
+  return im; 
 }
 
 //______zoom_in______ (TODO)
@@ -236,13 +237,11 @@ void make_gauss(double * gauss, int N, double sigma) {
       dx = abs(center - j);
 
       gauss[j + i * N] = (1.0 / (2.0 * PI * sq(sigma))) * exp( -(sq(dx) + sq(dy)) / (2 * sq(sigma)));
-      printf("%f  ", gauss[j + i * N]);
     }
-    printf("\n");
   }
 }
 
-void filter_pixel(Image * im, Pixel * p, int row, int col, double * gauss, int N) {
+void filter_pixel(Image * im, Pixel p, int row, int col, double * gauss, int N) {
   double weights[N * N][3];
   double weight_sum[3];
   
@@ -254,15 +253,18 @@ void filter_pixel(Image * im, Pixel * p, int row, int col, double * gauss, int N
   
   for (int i = row - (N/2); i <= row + (N/2); i++){
     for (int j = col - (N/2); j <= col + (N/2); j++){
-      if (i < 0 || j < 0 || i > im->rows || j > im->cols) continue;
+      if (i < 0 || j < 0 || i > im->rows || j > im->cols) {
+	b++;
+	continue;
+      }
 
       weights[b + a * N][0] = im->data[j + i * im->cols].r * gauss[b + a * N];
       weights[b + a * N][1] = im->data[j + i * im->cols].g * gauss[b + a * N];
       weights[b + a * N][2] = im->data[j + i * im->cols].b * gauss[b + a * N];
 
-      weights[0]+= weights[b + a * N][0];
-      weights[1]+= weights[b + a * N][1];
-      weights[2]+= weights[b + a * N][2];            
+      weight_sum[0]+= weights[b + a * N][0];
+      weight_sum[1]+= weights[b + a * N][1];
+      weight_sum[2]+= weights[b + a * N][2];            
       
       b++;
     }
