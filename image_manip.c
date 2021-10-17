@@ -85,13 +85,8 @@ Image * blur(Image * im, double sigma) {
   int len;
   Image * blurred = make_image(im->rows, im->cols);
   
-<<<<<<< HEAD
   if ((int) (10 * sigma) % 2 == 0) len = 10 * sigma + 1;
   else len = 10 * sigma;
-=======
-  if ((int)(10 * sigma) % 2 == 0) len = (int)(10 * sigma) + 1;
-  else len = (int)(10 * sigma);
->>>>>>> 977c474ebe9ec7e4f2889abf511f3359f543d6be
 
   double * gauss = malloc(sizeof(double) * len * len);
   
@@ -182,20 +177,8 @@ Image * rotate_left(Image * im) {
 Image * pointilism(Image * im) {
   //Make a copy of im 
   Image * point = make_image(im->rows, im->cols);
-<<<<<<< HEAD
   memcpy(point->data, im->data, (point->rows * point->cols) * sizeof(Pixel));
   
-  //Random integer from 1 to 5
-  int radius = (rand() % 5)+1;
-=======
-  for (int i = 0; i < im->rows; i++){
-    for (int j = 0; j < im->cols; j++){
-      point->data[j+i*im->cols].r = im->data[j+i*im->cols].r;
-      point->data[j+i*im->cols].g = im->data[j+i*im->cols].g;
-      point->data[j+i*im->cols].b = im->data[j+i*im->cols].b;
-    }
-  }
->>>>>>> 977c474ebe9ec7e4f2889abf511f3359f543d6be
   //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < im->rows * im->cols * 0.03; i++){
     //Pick random pixel and random radius
