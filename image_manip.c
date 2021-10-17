@@ -80,12 +80,12 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
 //______blur______ (TODO)
 /* apply a blurring filter to the image
  */
-Image * blur(Image * im, int sigma) {
+Image * blur(Image * im, double sigma) {
   int len;
   Image * blurred = make_image(im->rows, im->cols);
   
-  if ((10 * sigma) % 2 == 0) len = 10 * sigma + 1;
-  else len = 10 * sigma;
+  if ((int)(10 * sigma) % 2 == 0) len = (int)(10 * sigma) + 1;
+  else len = (int)(10 * sigma);
 
   double * gauss = malloc(sizeof(double) * len * len);
   
@@ -183,23 +183,22 @@ Image * pointilism(Image * im) {
       point->data[j+i*im->cols].b = im->data[j+i*im->cols].b;
     }
   }
-  //Random integer from 1 to 5
-  int radius = (rand() % 5)+1;
   //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < im->rows * im->cols * 0.03; i++){
-    //Pick random pixel
+    //Pick random pixel and random radius
     int pix = rand() % (point->rows * point->cols);
     int col = pix % point->cols;
     int row = pix / point->cols;
+    int radius = (rand() % 5)+1;
     //Loop the pixels around the selected pixel within radius
     for (int j = row-radius; j < row+radius; j++){
       for (int k = col-radius; k < col+radius; k++){
 	//Check for edge cases
 	if (j < 0){
-	  j = 0;
+	  continue;
 	}
 	else if (k < 0){
-	  k = 0;
+	  continue;
 	}
 	else if (j >= im->rows || k >= im->cols){
 	  continue;
