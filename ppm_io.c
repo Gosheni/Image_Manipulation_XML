@@ -55,7 +55,7 @@ Image * read_ppm(FILE *fp) {
   fscanf(fp, "%19s\n", tag);
   if (strncmp(tag, "P6", 20)) {
     fprintf(stderr, "Error:ppm_io - not a PPM (bad tag)\n");
-    free(im);
+    free_image(&im);
     return NULL;
   }
 
@@ -71,14 +71,14 @@ Image * read_ppm(FILE *fp) {
   int colors = read_num(fp);
   if (colors != 255) {
     fprintf(stderr, "Error:ppm_io - PPM file with colors different from 255\n");
-    free(im);
+    free_image(&im);
     return NULL;
   }
 
   //confirm that dimensions are positive
   if (im->cols <= 0 || im->rows <= 0) {
     fprintf(stderr, "Error:ppm_io - PPM file with non-positive dimensions\n");
-    free(im);
+    free_image(&im);
     return NULL;
   }
 
@@ -89,7 +89,7 @@ Image * read_ppm(FILE *fp) {
 
   if (!im->data) {
     fprintf(stderr, "Error:ppm_io - failed to allocate memory for image pixels!\n");
-    free(im);
+    free_image(&im);
     return NULL;
   }
 
@@ -97,7 +97,7 @@ Image * read_ppm(FILE *fp) {
   if (fread(im->data, sizeof(Pixel), (im->rows) * (im->cols), fp) != 
       (size_t)((im->rows) * (im->cols))) {
     fprintf(stderr, "Error:ppm_io - failed to read data from file!\n");
-    free(im);
+    free_image(&im);
     return NULL;
   }
 
@@ -140,7 +140,7 @@ Image * make_image (int rows, int cols) {
   // allocate pixel array
   im->data = malloc((im->rows * im->cols) * sizeof(Pixel));
   if (!im->data) {
-    free(im);
+    free_image(&im);
     return NULL;
   }
 
@@ -195,6 +195,7 @@ Image* make_copy (Image *orig) {
   if (copy) {
     memcpy(copy->data, orig->data, (copy->rows * copy->cols) * sizeof(Pixel));
   }
+  free_image(&orig);
 
   return copy;
 }
