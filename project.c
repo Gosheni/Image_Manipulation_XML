@@ -83,7 +83,7 @@ int main (int argc, char* argv[]) {
       return RC_OP_ARGS_RANGE_ERR;
     }
 
-    new_image = blur(orig_image, atoi(argv[4]));
+    new_image = blur(orig_image, atof(argv[4]));
   } else {
     fprintf(stderr, "Unsupported image processing operations\n");
     return RC_INVALID_OPERATION;
