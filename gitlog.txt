@@ -1,3 +1,9 @@
+commit 3dd388809141c3dd108ec70e0aa39e44f4ff416c
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 17 10:36:24 2021 -0400
+
+    fixed gradescope problems
+
 commit 4fde8e74c22cab05b64712b08c1555f315152249
 Author: Jalen Geason <dararahming@gmail.com>
 Date:   Sun Oct 17 10:29:53 2021 -0400

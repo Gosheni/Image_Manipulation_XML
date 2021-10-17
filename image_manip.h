@@ -47,6 +47,6 @@ Image * pointilism(Image *);
 //___blur___
 /* apply a blurring filter to the image
  */
-Image * blur(Image *, int);
+Image * blur(Image *, double);
 
 #endif

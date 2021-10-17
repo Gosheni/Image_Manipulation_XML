@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <assert.h>
+#include <string.h>
 #include "image_manip.h"
 #include "ppm_io.h"
 
@@ -80,11 +81,11 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
 //______blur______ (TODO)
 /* apply a blurring filter to the image
  */
-Image * blur(Image * im, int sigma) {
+Image * blur(Image * im, double sigma) {
   int len;
   Image * blurred = make_image(im->rows, im->cols);
   
-  if ((10 * sigma) % 2 == 0) len = 10 * sigma + 1;
+  if ((int) (10 * sigma) % 2 == 0) len = 10 * sigma + 1;
   else len = 10 * sigma;
 
   double * gauss = malloc(sizeof(double) * len * len);
@@ -176,13 +177,8 @@ Image * rotate_left(Image * im) {
 Image * pointilism(Image * im) {
   //Make a copy of im 
   Image * point = make_image(im->rows, im->cols);
-  for (int i = 0; i < im->rows; i++){
-    for (int j = 0; j < im->cols; j++){
-      point->data[j+i*im->cols].r = im->data[j+i*im->cols].r;
-      point->data[j+i*im->cols].g = im->data[j+i*im->cols].g;
-      point->data[j+i*im->cols].b = im->data[j+i*im->cols].b;
-    }
-  }
+  memcpy(point->data, im->data, (point->rows * point->cols) * sizeof(Pixel));
+  
   //Random integer from 1 to 5
   int radius = (rand() % 5)+1;
   //Loop pointilism size*0.03 times to cover 3% of pixels
