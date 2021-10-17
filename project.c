@@ -40,17 +40,33 @@ int main (int argc, char* argv[]) {
 
   Image * orig_image = read_ppm(orig);
 
-  new_image->rows = orig_image->rows;
-  new_image->cols = orig_image->cols;
-  
   if (orig_image == NULL) {
     fprintf(stderr, "The Input file cannot be read as a PPM file\n");
     return RC_INVALID_PPM;
   }
 
   if (strcmp(argv[3], "binarize") == 0) {
+    if (argc != 5) {
+      fprintf(stderr, "Incorrect number of arguments for the specified operation\n");
+      return RC_INVALID_OP_ARGS;
+    } else if (atoi(argv[4]) < 0 || atoi(argv[4]) > 255) {
+      fprintf(stderr, "Invalid arguments for the specified operation\n");
+      return RC_OP_ARGS_RANGE_ERR;
+    }
+    
     new_image = binarize(orig_image, atoi(argv[4]));
   } else if (strcmp(argv[3], "crop") == 0) {
+    if (argc != 8) {
+      fprintf(stderr, "Incorrect number of arguments for the specified operation\n");
+      return RC_INVALID_OP_ARGS;
+    } else if (atoi(argv[4]) < 0 || atoi(argv[4]) > orig_image->cols ||
+               atoi(argv[5]) < 0 || atoi(argv[5]) > orig_image->rows ||
+	       atoi(argv[6]) < 0 || atoi(argv[6]) > orig_image->cols || atoi(argv[6]) < atoi(argv[4]) ||
+	       atoi(argv[7]) < 0 || atoi(argv[7]) > orig_image->rows || atoi(argv[7]) < atoi(argv[5])) {
+      fprintf(stderr, "Invalid arguments for the specified operation\n");
+      return RC_OP_ARGS_RANGE_ERR;
+    }
+	       
     new_image = crop(orig_image, atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), atoi(argv[7]));
   } else if (strcmp(argv[3], "zoom_in") == 0) {
     new_image = zoom_in(orig_image);
@@ -59,6 +75,14 @@ int main (int argc, char* argv[]) {
   } else if (strcmp(argv[3], "pointilism") == 0) {
     new_image = pointilism(orig_image);
   } else if (strcmp(argv[3], "blur") == 0) {
+    if (argc != 5) {
+      fprintf(stderr, "Incorrect number of arguments for the specified operation\n");
+      return RC_INVALID_OP_ARGS;
+    } else if (atoi(argv[4]) <= 0) {
+      fprintf(stderr, "Invalid arguments for the specified operation\n");
+      return RC_OP_ARGS_RANGE_ERR;
+    }
+
     new_image = blur(orig_image, atoi(argv[4]));
   } else {
     fprintf(stderr, "Unsupported image processing operations\n");

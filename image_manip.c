@@ -18,12 +18,14 @@ unsigned char pixel_to_gray (const Pixel *p) {
 }
 
 void make_gauss(double * gauss, int N, double sigma);
-void filter_pixel(Image * im, int row, int col, double * gauss, int N);
+void filter_pixel(Image * bl, Image * im, int row, int col, double * gauss, int N);
 
 //______binarize______ (TODO)
 /* convert image to black and white only based on threshold value
  */
 Image * binarize(Image * im, int threshold) {
+  Image * bin = make_image(im->rows, im->cols);
+  
   // loop through each pixel in the array
   for (int i = 0; i < (im->rows * im->cols); i++) {
     // get pixel greyscale value
@@ -32,18 +34,18 @@ Image * binarize(Image * im, int threshold) {
     // if value < threshold, r, g, and b = 0
     // else r, g, and b = 255
     if ((int) value < threshold) {
-      im->data[i].r = 0;
-      im->data[i].g = 0;
-      im->data[i].b = 0;
+      bin->data[i].r = 0;
+      bin->data[i].g = 0;
+      bin->data[i].b = 0;
     } else {
-      im->data[i].r = 255;
-      im->data[i].g = 255;
-      im->data[i].b = 255;
+      bin->data[i].r = 255;
+      bin->data[i].g = 255;
+      bin->data[i].b = 255;
     }
   }
 
   // return image
-  return im; 
+  return bin; 
 }
 
 //______crop______ (TODO)
@@ -52,19 +54,12 @@ Image * binarize(Image * im, int threshold) {
  * created image containing just the cropped region
  */
 Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
-  //int rows = bot_row - top_row + 1;
-  //int cols = bot_col - top_col + 1;
-
   //Calculate size of the crop
   int rows = bot_row - top_row;
   int cols = bot_col - top_col;
   
   //Create new image cropped with adjusted size
-  Image * cropped = malloc(sizeof(Image));
-
-  cropped->data = malloc(sizeof(Pixel) * rows * cols);
-  cropped->rows = rows;
-  cropped->cols = cols;
+  Image * cropped = make_image(rows, cols);
 
   int index = 0;
   
@@ -79,9 +74,6 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
     }
   }
 
-  //Free original image im
-  free_image(&im);
-  
   return cropped;
 }
 
@@ -90,6 +82,7 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
  */
 Image * blur(Image * im, int sigma) {
   int len;
+  Image * blurred = make_image(im->rows, im->cols);
   
   if ((10 * sigma) % 2 == 0) len = 10 * sigma + 1;
   else len = 10 * sigma;
@@ -100,25 +93,20 @@ Image * blur(Image * im, int sigma) {
   
   for (int i = 0; i < im->rows; i++) {
     for (int j = 0; j < im->cols; j++) {
-      filter_pixel(im, i, j, gauss, len);
+      filter_pixel(blurred, im, i, j, gauss, len);
     }
   }
 
   free(gauss);
 
-  return im; 
+  return blurred; 
 }
 
 //______zoom_in______ (TODO)
 /* "zoom in" an image, by duplicating each pixel into a 2x2 square of pixels
  */
 Image * zoom_in(Image * im) {
-  Image * zoomed = malloc(sizeof(Image));
-
-  resize_image(&zoomed, im->rows * 2, im->cols * 2);
-  zoomed->rows = im->rows * 2;
-  zoomed->cols = im->cols * 2;
-  zoomed->data = malloc(sizeof(Pixel) * (zoomed->rows * 2) * (zoomed->cols * 2));
+  Image * zoomed = make_image(im->rows * 2, im->cols * 2);
 
   int index = 0;
   
@@ -152,8 +140,6 @@ Image * zoom_in(Image * im) {
     index += zoomed->cols;
   }
 
-  free_image(&im);
-  
   return zoomed;
 }
 
@@ -162,10 +148,7 @@ Image * zoom_in(Image * im) {
  */
 Image * rotate_left(Image * im) {
   //Make another image with reversed dimensions as im
-  Image *copy = malloc(sizeof(Image));
-  copy->data = malloc(sizeof(Pixel) * (im->rows) * (im->cols));
-  copy->rows = im->cols;
-  copy->cols = im->rows;
+  Image *copy = make_image(im->cols, im->rows);
 
   //Store row and col values/Incrementing index
   int row = im->rows;
@@ -182,8 +165,7 @@ Image * rotate_left(Image * im) {
       index++;
     }
   }
-  //Free image im
-  free_image(&im);
+
   //return new image copy
   return copy;
 }
@@ -192,14 +174,16 @@ Image * rotate_left(Image * im) {
 /* apply a painting like effect i.e. pointilism technique.
  */
 Image * pointilism(Image * im) {
+  Image * point = make_image(im->rows, im->cols);
+
   //Random integer from 1 to 5
   int radius = (rand() % 5)+1;
   //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < im->rows * im->cols * 0.03; i++){
     //Pick random pixel
-    int pix = rand() % (im->rows * im->cols);
-    int col = pix % im->cols;
-    int row = pix / im->cols;
+    int pix = rand() % (point->rows * point->cols);
+    int col = pix % point->cols;
+    int row = pix / point->cols;
     //Loop the pixels around the selected pixel within radius
     for (int j = row-radius; j < row+radius; j++){
       for (int k = col-radius; k < col+radius; k++){
@@ -215,15 +199,15 @@ Image * pointilism(Image * im) {
 	}
 	//Color the pixel if it is within radius from the selected pixel
 	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) < (radius * radius)){
-	  im->data[j*im->cols+k].r = im->data[pix].r;
-	  im->data[j*im->cols+k].g = im->data[pix].g;
-	  im->data[j*im->cols+k].b = im->data[pix].b;
+	  point->data[j*point->cols+k].r = im->data[pix].r;
+	  point->data[j*point->cols+k].g = im->data[pix].g;
+	  point->data[j*point->cols+k].b = im->data[pix].b;
 	}
       }
     }
   }
 
-  return im; //REPLACE STUB
+  return point;
 }
 
 void make_gauss(double * gauss, int N, double sigma) {
@@ -241,7 +225,7 @@ void make_gauss(double * gauss, int N, double sigma) {
   }
 }
 
-void filter_pixel(Image * im, int row, int col, double * gauss, int N) {
+void filter_pixel(Image * bl, Image * im, int row, int col, double * gauss, int N) {
   double weights[3] = {0};
   double filtered_sum = 0;
   int a = 0;
@@ -272,7 +256,7 @@ void filter_pixel(Image * im, int row, int col, double * gauss, int N) {
   weights[2] /= filtered_sum;
 
   //Modify image pixels
-  im->data[col + row * im->cols].r = weights[0];
-  im->data[col + row * im->cols].g = weights[1];
-  im->data[col + row * im->cols].b = weights[2];    
+  bl->data[col + row * im->cols].r = weights[0];
+  bl->data[col + row * im->cols].g = weights[1];
+  bl->data[col + row * im->cols].b = weights[2];    
 }
