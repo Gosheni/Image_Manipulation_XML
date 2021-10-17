@@ -70,7 +70,7 @@ int main (int argc, char* argv[]) {
     new_image = crop(orig_image, atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), atoi(argv[7]));
   } else if (strcmp(argv[3], "zoom_in") == 0) {
     new_image = zoom_in(orig_image);
-  } else if (strcmp(argv[3], "rotate_left") == 0) {
+  } else if (strcmp(argv[3], "rotate-left") == 0) {
     new_image = rotate_left(orig_image);
   } else if (strcmp(argv[3], "pointilism") == 0) {
     new_image = pointilism(orig_image);
@@ -78,7 +78,7 @@ int main (int argc, char* argv[]) {
     if (argc != 5) {
       fprintf(stderr, "Incorrect number of arguments for the specified operation\n");
       return RC_INVALID_OP_ARGS;
-    } else if (atoi(argv[4]) <= 0) {
+    } else if (atof(argv[4]) <= 0) {
       fprintf(stderr, "Invalid arguments for the specified operation\n");
       return RC_OP_ARGS_RANGE_ERR;
     }

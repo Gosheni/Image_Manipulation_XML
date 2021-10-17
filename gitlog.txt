@@ -1,0 +1,313 @@
+commit 4fde8e74c22cab05b64712b08c1555f315152249
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 17 10:29:53 2021 -0400
+
+    udpated README file
+
+commit d980ec65f86792c40b00d2d1c909f9c8cf2ce887
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 17 10:27:32 2021 -0400
+
+    README file
+
+commit f8b641ce9f9fb8fe4e829902f9ce347a271a9dec
+Merge: 57c62b6 f5c7c49
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 17 10:20:13 2021 -0400
+
+    Merge branch 'master' of github.com:jhu-ip/2021-fall-midterm-jgeason1-echoi51
+    some changes in ppm_io.c trying to fix valgrind
+
+commit 57c62b6dd76e96ccf42b243daf33605715a65e36
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 17 10:19:55 2021 -0400
+
+    added error checking in project.c
+
+commit f5c7c490feeae8d91775fd304cead87cb1a5f9db
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Sun Oct 17 01:24:27 2021 -0400
+
+    Couldn't find error, will visit Office Hour
+
+commit 25f576d82ed704435eb7142d34080182c02114c3
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sat Oct 16 19:50:04 2021 -0400
+
+    trying to run valgrind with no errors
+
+commit 9dfa16dace438b0d5f242dba981f4a66a1d79511
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Sat Oct 16 19:16:11 2021 -0400
+
+    Finished blur, added comments
+
+commit 6f8321f8fc2ab9a9d80b0ead3f52a5284d780076
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Sat Oct 16 19:06:17 2021 -0400
+
+    Finished blur, check for black borders around blur 5
+
+commit 890906cfad3e0b428f741e3cafee153aad14faa7
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sat Oct 16 15:54:52 2021 -0400
+
+    blur() compiles and runs, but has weird output.
+
+commit 4210490a37e0f44fee5ab656aaf353946ad92a38
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sat Oct 16 09:24:00 2021 -0400
+
+    debugging blur
+
+commit 68eca15c145b56b5d1b904ad44ffe77f45eebdf2
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Fri Oct 15 16:20:48 2021 -0400
+
+    first version of blur()
+
+commit 6e38ced28acb74ca4ae83d157be8fb5d4121d12f
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Thu Oct 14 18:04:55 2021 -0400
+
+    work on blur(), made new helper function make_gauss()
+
+commit 4c8006aa8b29a7a9b4961ce2f481c4cf68662342
+Merge: 43aef2a 32a791e
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Thu Oct 14 14:51:45 2021 -0400
+
+    began work on blur()
+
+commit 43aef2a6517b39c007aeff4d603f89038f110e3d
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Thu Oct 14 14:50:16 2021 -0400
+
+    began work on blur()
+
+commit 32a791eee1c59612ed45e97a3d74cb42a2646196
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Thu Oct 14 14:43:33 2021 -0400
+
+    Finished crop function
+
+commit bc7338b13a29990d1e960dcfd9a265cdcc681c00
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Wed Oct 13 18:03:12 2021 -0400
+
+    Added comments to pointilism function
+
+commit eced67565914b1c76f15b92a0b31a2ad374c1142
+Merge: 7959a0d 4996daa
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Wed Oct 13 17:40:13 2021 -0400
+
+    Merge branch 'master' of https://github.com/jhu-ip/2021-fall-midterm-jgeason1-echoi51
+
+commit 7959a0de63d0f631ba997250cbb12e78618ba116
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Wed Oct 13 17:38:32 2021 -0400
+
+    Finished pointilism
+
+commit 4996daa19a22bbc193c4e0a441c76a3db4ba20c4
+Merge: 70ba491 b8b9103
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Wed Oct 13 17:34:36 2021 -0400
+
+    Merge branch 'master' of github.com:jhu-ip/2021-fall-midterm-jgeason1-echoi51
+    merge image_manip.c
+
+commit 70ba491149b8bdc9a98ae8ff954e64245d8dc4eb
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Wed Oct 13 17:34:28 2021 -0400
+
+    worked more on crop(), giving malloc(): corrupted top size error
+
+commit b8b91037ab988bd1e3fcab313e1dc0c7b9674b99
+Merge: 1c5c490 29ef95f
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Wed Oct 13 17:27:54 2021 -0400
+
+    Merge branch 'master' of https://github.com/jhu-ip/2021-fall-midterm-jgeason1-echoi51
+
+commit 1c5c4901336855158df9d3980b8f134d4b814e07
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Wed Oct 13 17:26:53 2021 -0400
+
+    Partial work done on pointilism
+
+commit 29ef95fa017b8ccc2feb0c399e748091f8789ece
+Merge: d152496 c6ec069
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Wed Oct 13 16:17:13 2021 -0400
+
+    Merge branch 'master' of github.com:jhu-ip/2021-fall-midterm-jgeason1-echoi51
+    image_manip() merge
+
+commit d1524969083466ee68dcfff033f023e3259ede9a
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Wed Oct 13 16:17:01 2021 -0400
+
+    finished zoom_in(), working on crop()
+
+commit c6ec069f530e1bb03ac4c12aa928655cf20e89c5
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Wed Oct 13 15:07:00 2021 -0400
+
+    Polished rotate_left function a little bit
+
+commit 66e5b427edcc728b37db3e3a1c1c26305e8e673e
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Wed Oct 13 14:46:31 2021 -0400
+
+    worked on zoom_in()
+
+commit 4c25078733f2efbccd456963222ff9b245865861
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Tue Oct 12 21:17:31 2021 -0400
+
+    work on crop(), only time it works is if the dimensions are the full image
+
+commit 8d0c09437d3fdb6fa7fc6688ac00210b7fa7e47f
+Merge: dc8131e 2568e42
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Tue Oct 12 20:21:38 2021 -0400
+
+    work on crop()
+
+commit dc8131ea6ab81d1467da04974208483b220acd56
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Tue Oct 12 20:20:13 2021 -0400
+
+    work on crop()
+
+commit 2568e42a7eec727ef13e99841384166da069b38f
+Merge: eaa0795 3d05978
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Tue Oct 12 17:27:49 2021 -0400
+
+    Resolved merge conflict
+
+commit eaa0795dcc750f619c0897127a38579d555b448a
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Tue Oct 12 17:19:16 2021 -0400
+
+    Finished rotate_left function
+
+commit ae4b1215a21dcaf89cfa2403f60ed27d8de634e9
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Tue Oct 12 17:14:34 2021 -0400
+
+    Working rotate_left function
+
+commit 3d05978d82a3b212a4514d454257ef10bb23af41
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Tue Oct 12 15:41:28 2021 -0400
+
+    worked on crop()
+
+commit b3d425ca49d60c99dc2188fb4cff3cfc8ea53e7f
+Merge: 90e7495 55f1b31
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Tue Oct 12 14:53:47 2021 -0400
+
+    partial work on rotate_left()
+
+commit 90e749533e1826d0e3acba9f10febaba933dd7dc
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Tue Oct 12 14:51:58 2021 -0400
+
+    partial work on rotate_left()
+
+commit 55f1b317de209dbe7de0667861bbd466b93e43ea
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Mon Oct 11 22:33:28 2021 -0400
+
+    Updated rotate_left function but still creates unknown Segmentation Fault
+
+commit 7e88cd81f62a24394436dd84abaa5caac0253ffe
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Mon Oct 11 21:17:43 2021 -0400
+
+    Completed first version of rotate-left
+
+commit 1c6547c649b339fdf2f18d9570c3ae2cf7f5416b
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Mon Oct 11 20:23:06 2021 -0400
+
+    Working version of crop, not sure how to get correct pixels from orig image
+
+commit 95390c6d08cbd05fffda7ec827a7c9a34ee6e6fc
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Mon Oct 11 16:18:41 2021 -0400
+
+    completed binarize function
+
+commit 566830fee7c3b8af82e6ff37ed749b44f3f86a76
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 10 19:27:24 2021 -0400
+
+    updated version of binary, I/O errors not fixed yet
+
+commit e27b019937b8a205de4b620910810905dab105f7
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 10 13:42:01 2021 -0400
+
+    working version of binarize, with edits to project.c as well. Getting seg faults before even arriving to binarize function
+
+commit ad55fc00ffda25038753b61e9c9b78f7121ad338
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sun Oct 10 12:04:39 2021 -0400
+
+    updated working free_image function, changed checkerboard.c testing function to use free_image
+
+commit 23f5dda31cb3913e9f7627dd9aae9fcf482e5068
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sat Oct 9 20:25:12 2021 -0400
+
+    ppm_io.c functions completed and tested with checkerboard.c
+
+commit 5ed25c6d7197f629368a73438a1f3deba6c4855a
+Merge: a160541 28d19bd
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sat Oct 9 19:16:42 2021 -0400
+
+    Merge branch 'master' of github.com:jhu-ip/2021-fall-midterm-jgeason1-echoi51
+
+commit a160541a408848182038fc987e7b18296de5b406
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sat Oct 9 19:16:29 2021 -0400
+
+    modified free_image.c
+
+commit 28d19bd31d8c59c614061441b8ea1a38bf3bc5bc
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Sat Oct 9 01:46:28 2021 -0400
+
+    Implemented first version of resize_image
+
+commit 8b7b0d807feff71fd5c7de3354d65f7bd13ffa57
+Merge: e937d6a 7696e97
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Sat Oct 9 01:23:38 2021 -0400
+
+    Finished first version of write_ppm function
+
+commit e937d6abab5507d8fc7e42a145e1e6c3f90f0ec9
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Sat Oct 9 01:02:07 2021 -0400
+
+    Finished first version of write_ppm
+
+commit 7696e975bb30734fcbd56f9a98d78f6d65974af5
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Sat Oct 9 00:43:15 2021 -0400
+
+    copied scaffolding folder to shared repo
+
+commit df5c85d69f3b36194b4839d449bd6e1b1f393d8d
+Author: Gosheni <euihyunc31@gmail.com>
+Date:   Sat Oct 9 00:35:17 2021 -0400
+
+    first commit
