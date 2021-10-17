@@ -13,7 +13,7 @@
 int read_num(FILE *fp) {
   assert(fp);
 
-  char ch;
+  int ch;
   while((ch = fgetc(fp)) == '#') { // # marks a comment line
     while( ((ch = fgetc(fp)) != '\n') && ch != EOF ) {
       /* discard characters til end of line */

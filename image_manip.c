@@ -174,8 +174,15 @@ Image * rotate_left(Image * im) {
 /* apply a painting like effect i.e. pointilism technique.
  */
 Image * pointilism(Image * im) {
+  //Make a copy of im 
   Image * point = make_image(im->rows, im->cols);
-
+  for (int i = 0; i < im->rows; i++){
+    for (int j = 0; j < im->cols; j++){
+      point->data[j+i*im->cols].r = im->data[j+i*im->cols].r;
+      point->data[j+i*im->cols].g = im->data[j+i*im->cols].g;
+      point->data[j+i*im->cols].b = im->data[j+i*im->cols].b;
+    }
+  }
   //Random integer from 1 to 5
   int radius = (rand() % 5)+1;
   //Loop pointilism size*0.03 times to cover 3% of pixels
@@ -206,7 +213,6 @@ Image * pointilism(Image * im) {
       }
     }
   }
-
   return point;
 }
 
