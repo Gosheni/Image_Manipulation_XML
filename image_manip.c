@@ -82,22 +82,28 @@ Image * crop(Image * im, int top_col, int top_row, int bot_col, int bot_row) {
 /* apply a blurring filter to the image
  */
 Image * blur(Image * im, double sigma) {
+  // create length variable to store N and make new image called blur
   int len;
   Image * blurred = make_image(im->rows, im->cols);
-  
+
+  // if 10 * sigma is even, then length equals that + 1, else it just equals that
   if ((int) (10 * sigma) % 2 == 0) len = 10 * sigma + 1;
   else len = 10 * sigma;
 
+  // allocate space for 2D array gauss
   double * gauss = malloc(sizeof(double) * len * len);
-  
+
+  // populate gauss
   make_gauss(gauss, len, sigma);
-  
+
+  // filter each pixel in im and put it in blurred
   for (int i = 0; i < im->rows; i++) {
     for (int j = 0; j < im->cols; j++) {
       filter_pixel(blurred, im, i, j, gauss, len);
     }
   }
 
+  // free gauss
   free(gauss);
 
   return blurred; 
@@ -212,15 +218,23 @@ Image * pointilism(Image * im) {
 }
 
 void make_gauss(double * gauss, int N, double sigma) {
+  // find center of gauss
   int center = N / 2;
 
+  // define offset for x and y
   int dx; int dy;
-  
+
+  // loop through each element in gauss
   for (int i = 0; i < N; i++) {
+
+    // initialize dy
     dy = abs(center - i);
     for (int j = 0; j < N; j++) {
+
+      // initialize dx
       dx = abs(center - j);
 
+      // set element to solution from gauss equation
       gauss[j + i * N] = (1.0 / (2.0 * PI * sq(sigma))) * exp( -(sq(dx) + sq(dy)) / (2 * sq(sigma)));
     }
   }

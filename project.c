@@ -29,22 +29,26 @@ int main (int argc, char* argv[]) {
     return RC_MISSING_FILENAME;
   }
 
-  // TODO: implement the rest of this project!
-  Image * new_image = malloc(sizeof(Image));
+  // make pointer to new image and open original file
+  Image * new_image;
   FILE * orig = fopen(argv[1], "r");
 
+  // input I/O error checker
   if (orig == NULL) {
     fprintf(stderr, "Input file I/O error\n");
     return RC_OPEN_FAILED;
   }
 
+  // make image from original file
   Image * orig_image = read_ppm(orig);
 
+  // input PPM error checker
   if (orig_image == NULL) {
     fprintf(stderr, "The Input file cannot be read as a PPM file\n");
     return RC_INVALID_PPM;
   }
 
+  // choose which operation will be done and check if there are valid inputs
   if (strcmp(argv[3], "binarize") == 0) {
     if (argc != 5) {
       fprintf(stderr, "Incorrect number of arguments for the specified operation\n");
@@ -84,30 +88,37 @@ int main (int argc, char* argv[]) {
     }
 
     new_image = blur(orig_image, atof(argv[4]));
-  } else {
+  } else { // no supported operations
     fprintf(stderr, "Unsupported image processing operations\n");
     return RC_INVALID_OPERATION;
   }
 
+  // open new image file
   FILE * manip = fopen(argv[2], "w");
 
+  // output I/O error
   if (manip == NULL) {
     fprintf(stderr, "Output file I/O error\n");
     return RC_WRITE_FAILED;
   }
-  
+
+  // write image to file
   int num_pixels = write_ppm(manip, new_image);
-  
+
+  // write_ppm error checker
   if (num_pixels == -1) {
     fprintf(stderr, "Output file I/O error\n");
     return RC_WRITE_FAILED;
-  } else if (num_pixels != new_image->cols * new_image->rows) {
+  } else if (num_pixels != new_image->cols * new_image->rows) { // other error with image_manip.c
     fprintf(stderr, "Other errors not specified above\n");
     return RC_UNSPECIFIED_ERR;
   }
 
+  // free new image and original image and close files
   free_image(&new_image);
   free_image(&orig_image);  
+  fclose(orig);
+  fclose(manip);
   
   return RC_SUCCESS;
 }
