@@ -186,23 +186,17 @@ Image * pointilism(Image * im) {
   memcpy(point->data, im->data, (point->rows * point->cols) * sizeof(Pixel));
   
   //Loop pointilism size*0.03 times to cover 3% of pixels
-  for (int i = 0; i < im->rows * im->cols * 0.03; i++){
+  for (int i = 0; i < point->rows * point->cols * 0.03; i++){
     //Pick random pixel and random radius
     int pix = rand() % (point->rows * point->cols);
     int col = pix % point->cols;
     int row = pix / point->cols;
-    int radius = (rand() % 5)+1;
+    int radius = (rand() % 5) + 1;
     //Loop the pixels around the selected pixel within radius
-    for (int j = row-radius; j < row+radius; j++){
-      for (int k = col-radius; k < col+radius; k++){
+    for (int j = row-radius; j <= row+radius; j++){
+      for (int k = col-radius; k <= col+radius; k++){
 	//Check for edge cases
-	if (j < 0){
-	  continue;
-	}
-	else if (k < 0){
-	  continue;
-	}
-	else if (j >= im->rows || k >= im->cols){
+	if (j < 0 || k < 0 || j >= im->rows || k >= im->cols){
 	  continue;
 	}
 	//Color the pixel if it is within radius from the selected pixel
@@ -249,7 +243,7 @@ void filter_pixel(Image * bl, Image * im, int row, int col, double * gauss, int 
   for (int i = row - (N/2); i <= row + (N/2); i++){
     for (int j = col - (N/2); j <= col + (N/2); j++){
       //Check for edge cases
-      if (i < 0 || j < 0 || i > im->rows || j > im->cols) {
+      if (i < 0 || j < 0 || i >= im->rows || j >= im->cols) {
 	a++;
 	continue;
       }
