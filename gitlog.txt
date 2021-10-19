@@ -1,3 +1,9 @@
+commit 2746d1706eb0b16106b69a7d32ba16635ad3c57f
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Mon Oct 18 12:48:32 2021 -0400
+
+    added comments and fixed valgrind issue
+
 commit 401b7adbb9b400a1b78012a3c83516f060ba6cb2
 Author: Jalen Geason <dararahming@gmail.com>
 Date:   Sun Oct 17 19:40:29 2021 -0400
