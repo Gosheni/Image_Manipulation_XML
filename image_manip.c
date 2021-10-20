@@ -18,6 +18,7 @@ unsigned char pixel_to_gray (const Pixel *p) {
                           (0.11 * (double)p->b) );
 }
 
+int check_duplicates(int num, int array[], int length);
 void make_gauss(double * gauss, int N, double sigma);
 void filter_pixel(Image * bl, Image * im, int row, int col, double * gauss, int N);
 
@@ -185,12 +186,27 @@ Image * pointilism(Image * im) {
   Image * point = make_image(im->rows, im->cols);
   memcpy(point->data, im->data, (point->rows * point->cols) * sizeof(Pixel));
   
+  int row_array[(int) (point->rows * point->cols * 0.03)];
+  int col_array[(int) (point->rows * point->cols * 0.03)];  
+  int length = 0;
+  
   //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < point->rows * point->cols * 0.03; i++){
     //Pick random pixel and random radius
     int col = rand() % point->cols;
     int row = rand() % point->rows;
     int radius = (rand() % 5) + 1;
+
+    while(!check_duplicates(col, col_array, length) && !check_duplicates(row, row_array, length)) {
+      printf("duplicate...%d, %d\n", row, col);
+      col = rand() % point->cols;
+      row = rand() % point->rows;
+    }
+
+    col_array[length] = col;
+    row_array[length] = row;
+    length++;
+    
     //Loop the pixels around the selected pixel within radius
     for (int j = row-radius; j <= row+radius; j++){
       for (int k = col-radius; k <= col+radius; k++){
@@ -199,7 +215,7 @@ Image * pointilism(Image * im) {
 	  continue;
 	}
 	//Color the pixel if it is within radius from the selected pixel
-	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) < (radius * radius)){
+	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) <= (radius * radius)){
 	  point->data[j*point->cols+k].r = im->data[row*point->cols+col].r;
 	  point->data[j*point->cols+k].g = im->data[row*point->cols+col].g;
 	  point->data[j*point->cols+k].b = im->data[row*point->cols+col].b;
@@ -208,6 +224,14 @@ Image * pointilism(Image * im) {
     }
   }
   return point;
+}
+
+int check_duplicates(int num, int array[], int length) {
+  for (int i = 0; i < length; i++) {
+    if (array[i] == num) return 0;
+  }
+
+  return 1;
 }
 
 void make_gauss(double * gauss, int N, double sigma) {

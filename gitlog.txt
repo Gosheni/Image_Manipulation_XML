@@ -1,3 +1,15 @@
+commit ab0dceaf8a5649d605f0ab22251ebe54af718b50
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Wed Oct 20 15:41:21 2021 -0400
+
+    fixed pointilism (we think)
+
+commit 8030da41b724c81f40e319576b9db46b92d23624
+Author: Jalen Geason <dararahming@gmail.com>
+Date:   Wed Oct 20 15:41:01 2021 -0400
+
+    fixed pointilism (we think)
+
 commit ef1d8122d540e258c25af8f7e42561280dfb5de2
 Author: Jalen Geason <dararahming@gmail.com>
 Date:   Tue Oct 19 10:48:22 2021 -0400
