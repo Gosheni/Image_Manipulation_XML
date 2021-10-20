@@ -195,10 +195,8 @@ Image * pointilism(Image * im) {
     //Pick random pixel and random radius
     int col = rand() % point->cols;
     int row = rand() % point->rows;
-    int radius = (rand() % 5) + 1;
 
-    while(!check_duplicates(col, col_array, length) && !check_duplicates(row, row_array, length)) {
-      printf("duplicate...%d, %d\n", row, col);
+    while(check_duplicates(col, col_array, length) && check_duplicates(row, row_array, length)) {
       col = rand() % point->cols;
       row = rand() % point->rows;
     }
@@ -206,6 +204,8 @@ Image * pointilism(Image * im) {
     col_array[length] = col;
     row_array[length] = row;
     length++;
+
+    int radius = (rand() % 5) + 1;
     
     //Loop the pixels around the selected pixel within radius
     for (int j = row-radius; j <= row+radius; j++){
@@ -227,7 +227,7 @@ Image * pointilism(Image * im) {
 }
 
 int check_duplicates(int num, int array[], int length) {
-  for (int i = 0; i < length; i++) {
+  for (int i = 0; i <= length; i++) {
     if (array[i] == num) return 0;
   }
 
