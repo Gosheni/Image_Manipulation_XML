@@ -188,9 +188,8 @@ Image * pointilism(Image * im) {
   //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < point->rows * point->cols * 0.03; i++){
     //Pick random pixel and random radius
-    int pix = rand() % (point->rows * point->cols);
-    int col = pix % point->cols;
-    int row = pix / point->cols;
+    int col = rand() % point->cols;
+    int row = rand() % point->rows;
     int radius = (rand() % 5) + 1;
     //Loop the pixels around the selected pixel within radius
     for (int j = row-radius; j <= row+radius; j++){
@@ -201,9 +200,9 @@ Image * pointilism(Image * im) {
 	}
 	//Color the pixel if it is within radius from the selected pixel
 	else if ((abs(row-j) * abs(row-j) + abs(col-k) * abs(col-k)) < (radius * radius)){
-	  point->data[j*point->cols+k].r = im->data[pix].r;
-	  point->data[j*point->cols+k].g = im->data[pix].g;
-	  point->data[j*point->cols+k].b = im->data[pix].b;
+	  point->data[j*point->cols+k].r = im->data[row*point->cols+col].r;
+	  point->data[j*point->cols+k].g = im->data[row*point->cols+col].g;
+	  point->data[j*point->cols+k].b = im->data[row*point->cols+col].b;
 	}
       }
     }
