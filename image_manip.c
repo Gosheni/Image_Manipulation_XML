@@ -18,7 +18,6 @@ unsigned char pixel_to_gray (const Pixel *p) {
                           (0.11 * (double)p->b) );
 }
 
-int check_duplicates(int num, int array[], int length);
 void make_gauss(double * gauss, int N, double sigma);
 void filter_pixel(Image * bl, Image * im, int row, int col, double * gauss, int N);
 
@@ -195,16 +194,6 @@ Image * pointilism(Image * im) {
     //Pick random pixel and random radius
     int col = rand() % point->cols;
     int row = rand() % point->rows;
-
-    while(check_duplicates(col, col_array, length) && check_duplicates(row, row_array, length)) {
-      col = rand() % point->cols;
-      row = rand() % point->rows;
-    }
-
-    col_array[length] = col;
-    row_array[length] = row;
-    length++;
-
     int radius = (rand() % 5) + 1;
     
     //Loop the pixels around the selected pixel within radius
@@ -224,14 +213,6 @@ Image * pointilism(Image * im) {
     }
   }
   return point;
-}
-
-int check_duplicates(int num, int array[], int length) {
-  for (int i = 0; i <= length; i++) {
-    if (array[i] == num) return 0;
-  }
-
-  return 1;
 }
 
 void make_gauss(double * gauss, int N, double sigma) {
