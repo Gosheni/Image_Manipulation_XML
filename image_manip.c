@@ -185,10 +185,6 @@ Image * pointilism(Image * im) {
   Image * point = make_image(im->rows, im->cols);
   memcpy(point->data, im->data, (point->rows * point->cols) * sizeof(Pixel));
   
-  int row_array[(int) (point->rows * point->cols * 0.03)];
-  int col_array[(int) (point->rows * point->cols * 0.03)];  
-  int length = 0;
-  
   //Loop pointilism size*0.03 times to cover 3% of pixels
   for (int i = 0; i < point->rows * point->cols * 0.03; i++){
     //Pick random pixel and random radius
